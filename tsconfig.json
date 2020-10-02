@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": false,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "lib": ["es2015"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "baseUrl": "packages",
+    "paths": {
+      "@qbittorrent": ["qbittorrent/src"],
+      "@shared": ["shared/src"],
+      "@torrent": ["torrent/src"],
+      // Rest of files
+      "@qbittorrent*": ["qbittorrent/src*"],
+      "@shared*": ["shared/src*"],
+      "@torrent*": ["torrent/src*"]
+    },
+  },
+  "exclude": ["node_modules"]
+}
