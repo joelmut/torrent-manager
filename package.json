@@ -4,7 +4,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register ./samples/series.ts"
+    "series": "ts-node -r tsconfig-paths/register ./samples/series.ts",
+    "movies": "ts-node -r tsconfig-paths/register ./samples/movies.ts"
   },
   "dependencies": {
     "axios": "^0.20.0",

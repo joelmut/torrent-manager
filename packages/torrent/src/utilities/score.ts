@@ -1,10 +1,14 @@
-import { SeriesTorrentMetadata } from "../interfaces";
+import { TorrentMetadata } from '@shared/interfaces';
+import {
+  MoviesTorrentMetadata,
+  SeriesTorrentMetadata,
+} from '@torrent/interfaces';
 
 // Score system
 
 const calculators = (modifiers: ScoreModifiers) => ({
   group(torrents: any[], group: string) {
-    const { length } = torrents.filter((e) => e.group === group);
+    const { length } = torrents.filter(e => e.group === group);
     return length * modifiers.group;
   },
 
@@ -36,11 +40,11 @@ const calculators = (modifiers: ScoreModifiers) => ({
   },
 });
 
-const calculate = (torrents: SeriesTorrentMetadata[], modifiers: ScoreModifiers) => {
+const calculate = (torrents: any, modifiers: ScoreModifiers) => {
   const calc = calculators(modifiers);
 
   return torrents
-    .map((e) => {
+    .map(e => {
       const score = [
         calc.group(torrents, e.group),
         calc.seeders(e.seeders),
@@ -48,7 +52,7 @@ const calculate = (torrents: SeriesTorrentMetadata[], modifiers: ScoreModifiers)
         calc.size(e.size.raw),
         calc.resolution(e.resolution),
         calc.codec(e.codec),
-        calc.seasonPack(e.season_pack),
+        calc.seasonPack((e as any).season_pack),
       ].reduce((acc, val) => acc + val, 0);
 
       return { score: Math.round(score), ...e };
@@ -57,14 +61,16 @@ const calculate = (torrents: SeriesTorrentMetadata[], modifiers: ScoreModifiers)
 };
 
 interface ScoreModifiersResolutions {
-  "4k"?: number;
-  "1080p"?: number;
-  "720p"?: number;
+  '4k'?: number;
+  '1080p'?: number;
+  '720p'?: number;
 }
 
 interface ScoreModifiersCodecs {
   h264?: number;
   x264?: number;
+  h265?: number;
+  x265?: number;
 }
 
 interface ScoreModifiers {
@@ -88,27 +94,33 @@ const modifiers: ScoreModifiers = {
   size: 3,
   seasonPack: 10,
   resolution: {
-    "4k": 10,
-    "1080p": 10,
-    "720p": 2.5,
+    '4k': 10,
+    '1080p': 10,
+    '720p': 2.5,
   },
   codecs: {
     h264: 5,
     x264: 10,
+    h265: 15,
+    x265: 20,
   },
 };
 
 export function score(
   value?: ScoreOptions
-): (torrents: SeriesTorrentMetadata[]) => SeriesTorrentMetadata[];
+): <T extends MoviesTorrentMetadata | SeriesTorrentMetadata>(
+  torrents: T[]
+) => (T extends SeriesTorrentMetadata
+  ? SeriesTorrentMetadata
+  : T extends MoviesTorrentMetadata
+  ? MoviesTorrentMetadata
+  : never)[];
 export function score(value: SeriesTorrentMetadata[]): SeriesTorrentMetadata[];
-export function score(
-  value: SeriesTorrentMetadata[] | ScoreOptions
-): SeriesTorrentMetadata[] | ((torrents: SeriesTorrentMetadata[]) => SeriesTorrentMetadata[]) {
+export function score(value: MoviesTorrentMetadata[]): MoviesTorrentMetadata[];
+export function score(value: ScoreOptions | SeriesTorrentMetadata[]) {
   if (Array.isArray(value)) {
     return calculate(value, modifiers);
   }
 
-  return (torrents) =>
-    calculate(torrents, { ...modifiers, ...value?.modifiers });
+  return torrents => calculate(torrents, { ...modifiers, ...value?.modifiers });
 }

@@ -19,7 +19,7 @@ import {
     name: '{serie_title} S{season}E{episode}',
   };
 
-  const torrents = await flow(search, score, filter, sort)(query);
+  const torrents = await flow(search,score, filter, sort)(query);
 
   await download(options)(torrents);
 })();

@@ -1,10 +1,6 @@
 import { SeriesSearchOptions } from '@torrent/interfaces';
 import { categories } from '../categories';
-
-export interface Params {
-  search_string: string;
-  category: string;
-}
+import { Params } from '@torrent/interfaces/Params';
 
 export function buildParams(options: SeriesSearchOptions): Params {
   const { query, season, resolution, episode, title } = options;
