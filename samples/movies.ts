@@ -5,6 +5,7 @@ import {
   MoviesSearchOptions,
   DownloadOptions,
 } from '@torrent';
+import { filter } from '@torrent/movies/filter';
 
 (async () => {
   const { search, download } = movies;
@@ -17,9 +18,7 @@ import {
     name: '{movie_title}',
   };
 
-  const torrents = await flow(search, score)(query);
+  const torrents = await flow(search, score, filter)(query);
 
-  console.log(torrents);
-
-  // await download(options)(torrents);
+  await download(options)(torrents);
 })();
