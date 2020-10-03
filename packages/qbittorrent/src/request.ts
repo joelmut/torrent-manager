@@ -3,7 +3,7 @@ import {
   QBITTORRENT_PASSWORD,
   QBITTORRENT_URL,
   QBITTORRENT_USERNAME,
-} from '@torrent/utilities/env';
+} from '@root/env';
 
 export const request = axios.create({
   baseURL: QBITTORRENT_URL,

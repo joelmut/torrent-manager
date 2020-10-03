@@ -15,7 +15,7 @@ export async function search(
   return retry(async cancel => {
     const params = buildParams(options);
 
-    const { data } = await request({ method: 'GET', params });
+    const { data } = await request({ method: 'get', params });
 
     if (!!data?.torrent_results) {
       cancel();

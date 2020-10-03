@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "series": "ts-node -r tsconfig-paths/register ./samples/series.ts",
-    "movies": "ts-node -r tsconfig-paths/register ./samples/movies.ts"
+    "movies": "ts-node -r tsconfig-paths/register ./samples/movies.ts",
+    "tmdb:search": "ts-node -r tsconfig-paths/register ./samples/tmdb/search.ts",
+    "sample": "ts-node -r tsconfig-paths/register ./samples/index.ts"
   },
   "dependencies": {
     "axios": "^0.20.0",

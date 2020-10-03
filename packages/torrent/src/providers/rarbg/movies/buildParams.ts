@@ -3,16 +3,22 @@ import { categories } from '../categories';
 import { Params } from '@torrent/interfaces/Params';
 
 export function buildParams(options: MoviesSearchOptions): Params {
-  const { query, resolution, title } = options;
+  const { query, resolution, title, tmdb, imdb, tvdb, tvrage } = options;
 
-  let search_string = query;
+  let search_string = query || '';
 
-  if (!search_string && !!title) {
+  if (!search_string) {
     search_string = title;
   }
 
-  const cat = categories.movies[resolution] || categories.movies['1080p'];
-  const category = cat.join(';');
+  search_string = search_string.trim();
 
-  return { search_string, category };
+  return {
+    search_string,
+    search_themoviedb: tmdb,
+    search_imdb: imdb,
+    search_tvdb: tvdb,
+    search_tvrage: tvrage,
+    category: categories.get('movies', resolution),
+  };
 }

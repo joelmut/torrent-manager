@@ -2,4 +2,6 @@ export const {
   QBITTORRENT_URL,
   QBITTORRENT_USERNAME,
   QBITTORRENT_PASSWORD,
+  TMDB_URL,
+  TMDB_API_KEY
 } = process.env;

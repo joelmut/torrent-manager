@@ -13,14 +13,17 @@
     "noEmitOnError": true,
     "baseUrl": "packages",
     "paths": {
+      "@root*": ["../*"],
       "@qbittorrent": ["qbittorrent/src"],
       "@shared": ["shared/src"],
       "@torrent": ["torrent/src"],
+      "@tmdb": ["tmdb/src"],
       // Rest of files
       "@qbittorrent*": ["qbittorrent/src*"],
       "@shared*": ["shared/src*"],
-      "@torrent*": ["torrent/src*"]
-    },
+      "@torrent*": ["torrent/src*"],
+      "@tmdb*": ["tmdb/src*"]
+    }
   },
   "exclude": ["node_modules"]
 }
